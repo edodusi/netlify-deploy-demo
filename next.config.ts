@@ -2,10 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   // Netlify-specific optimizations
-  experimental: {
-    // Enable server components
-    serverComponentsExternalPackages: ['storyblok-js-client'],
-  },
+  serverExternalPackages: ['storyblok-js-client'],
   
   // Image optimization for Netlify
   images: {
@@ -30,8 +27,7 @@ const nextConfig: NextConfig = {
   // Trailing slash configuration
   trailingSlash: false,
 
-  // Enable SWC minification
-  swcMinify: true,
+  // SWC minification is enabled by default in Next.js 15
 
   // Headers for better performance
   async headers() {

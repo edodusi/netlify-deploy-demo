@@ -6,13 +6,14 @@ async function getStoryData(slug: string) {
 }
 
 interface PageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 export default async function Page({ params }: PageProps) {
-  const storyData = await getStoryData(params.slug);
+  const { slug } = await params;
+  const storyData = await getStoryData(slug);
   
   if (!storyData) {
     return <div>Story not found</div>;
