@@ -45,9 +45,7 @@ const nextConfig: NextConfig = {
   },
 
   // Environment variables validation
-  env: {
-    STORYBLOK_PREVIEW_TOKEN: process.env.STORYBLOK_PREVIEW_TOKEN,
-  },
+
 };
 
 export default nextConfig;
