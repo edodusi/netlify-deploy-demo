@@ -1,38 +1,43 @@
 import StoryblokClient from "storyblok-js-client";
 
 class StoryblokService {
-  private client: StoryblokClient;
+  private client: StoryblokClient | null = null;
 
-  constructor() {
-    this.client = new StoryblokClient({
-      accessToken: process.env.STORYBLOK_PREVIEW_TOKEN!,
-    });
+  private getClient() {
+    if (!this.client) {
+      this.client = new StoryblokClient({
+        accessToken: process.env.STORYBLOK_PREVIEW_TOKEN!,
+      });
+    }
+    return this.client;
   }
 
   async getStory(slug: string, options?: any) {
-    return this.client.get(`cdn/stories/${slug}`, {
+    const client = this.getClient();
+    return client.get(`cdn/stories/${slug}`, {
       version: "draft",
-      ...options
+      ...options,
     });
   }
 
   async getStories(options?: any) {
-    return this.client.get("cdn/stories", {
+    const client = this.getClient();
+    return client.get("cdn/stories", {
       version: "draft",
-      ...options
+      ...options,
     });
   }
 
   async getStoriesByUuids(uuids: string[], options?: any) {
-    return this.client.get("cdn/stories", {
+    const client = this.getClient();
+    return client.get("cdn/stories", {
       version: "draft",
-      by_uuids: uuids.join(','),
-      ...options
+      by_uuids: uuids.join(","),
+      ...options,
     });
   }
 }
 
-// Export a factory function instead of a singleton
 export function getStoryblokService() {
   return new StoryblokService();
 }
