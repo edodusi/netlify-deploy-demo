@@ -5,50 +5,34 @@ class StoryblokService {
 
   constructor() {
     this.client = new StoryblokClient({
-      accessToken: process.env.NEXT_PUBLIC_STORYBLOK_PREVIEW_TOKEN!,
+      accessToken: process.env.STORYBLOK_PREVIEW_TOKEN!,
     });
   }
 
   async getStory(slug: string, options?: any) {
-    try {
-      const response = await this.client.get(`cdn/stories/${slug}`, {
-        version: "draft",
-        ...options
-      });
-      return response;
-    } catch (error) {
-      console.error(`Error fetching story ${slug}:`, error);
-      return null;
-    }
+    return this.client.get(`cdn/stories/${slug}`, {
+      version: "draft",
+      ...options
+    });
   }
 
   async getStories(options?: any) {
-    try {
-      const response = await this.client.get("cdn/stories", {
-        version: "draft",
-        ...options
-      });
-      return response;
-    } catch (error) {
-      console.error("Error fetching stories:", error);
-      return null;
-    }
+    return this.client.get("cdn/stories", {
+      version: "draft",
+      ...options
+    });
   }
 
   async getStoriesByUuids(uuids: string[], options?: any) {
-    try {
-      const response = await this.client.get("cdn/stories", {
-        version: "draft",
-        by_uuids: uuids.join(','),
-        ...options
-      });
-      return response;
-    } catch (error) {
-      console.error("Error fetching stories by UUIDs:", error);
-      return null;
-    }
+    return this.client.get("cdn/stories", {
+      version: "draft",
+      by_uuids: uuids.join(','),
+      ...options
+    });
   }
 }
 
-// Export a singleton instance
-export const storyblokService = new StoryblokService();
+// Export a factory function instead of a singleton
+export function getStoryblokService() {
+  return new StoryblokService();
+}

@@ -1,12 +1,14 @@
 import Teaser from "../../components/Teaser";
-import { storyblokService } from "../../services/storyblok";
+import { getStoryblokService } from "../../services/storyblok";
 
 async function getHomepageData() {
+  const storyblokService = getStoryblokService();
   return await storyblokService.getStory("home");
 }
 
 async function getFeaturedPosts(postUuids: string[]) {
   try {
+    const storyblokService = getStoryblokService();
     const response = await storyblokService.getStoriesByUuids(postUuids);
     return response?.data?.stories || [];
   } catch (error) {

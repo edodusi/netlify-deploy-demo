@@ -1,6 +1,7 @@
-import { storyblokService } from "../../../services/storyblok";
+import { getStoryblokService } from "../../../services/storyblok";
 
 async function getStoryData(slug: string) {
+  const storyblokService = getStoryblokService();
   const response = await storyblokService.getStory(`posts/${slug}`);
   return response;
 }
