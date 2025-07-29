@@ -3,6 +3,7 @@ import "./globals.css";
 import { Geist, Geist_Mono } from "next/font/google";
 import type { Metadata } from "next";
 import { draftMode } from "next/headers";
+import DraftToolbar from "../components/DraftToolbar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,7 +31,10 @@ export default async function RootLayout({
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         {isStoryblokPreview ? (
-          <StoryblokProvider>{children}</StoryblokProvider>
+          <>
+            <DraftToolbar />
+            <StoryblokProvider>{children}</StoryblokProvider>
+          </>
         ) : (
           children
         )}
