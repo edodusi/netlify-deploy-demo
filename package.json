@@ -5,10 +5,13 @@
   "scripts": {
     "dev": "next dev --turbopack --experimental-https",
     "build": "next build",
+    "build:netlify": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "analyze": "cross-env ANALYZE=true next build"
   },
   "dependencies": {
+    "@netlify/plugin-nextjs": "^5.11.6",
     "@storyblok/js": "^4.2.1",
     "next": "15.4.4",
     "react": "19.1.0",
