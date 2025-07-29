@@ -5,7 +5,7 @@ class StoryblokService {
 
   constructor() {
     this.client = new StoryblokClient({
-      accessToken: process.env.STORYBLOK_PREVIEW_TOKEN!,
+      accessToken: process.env.NEXT_PUBLIC_STORYBLOK_PREVIEW_TOKEN!,
     });
   }
 
