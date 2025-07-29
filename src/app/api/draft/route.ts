@@ -12,7 +12,7 @@ export async function GET(request: Request) {
   // 1. Parse query string parameters from the request URL
   const { searchParams } = new URL(request.url);
   const secret = searchParams.get("secret");
-  const slug = searchParams.get("slug");
+  const slug = searchParams.get("slug") || 'home';
 
   // 2. Validate the secret token
   // This should be a secret environment variable to prevent unauthorized access.
