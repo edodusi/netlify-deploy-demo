@@ -1,24 +1,16 @@
-import { renderRichText } from '@storyblok/js';
+import { storyblokEditable } from "@storyblok/react/rsc";
+import { type SbBlokData } from "@storyblok/react/rsc";
 
-interface TeaserProps {
-  headline?: string;
-  text?: any;
+interface TeaserBlok extends SbBlokData {
+  headline: string;
 }
 
-export default function Teaser({ headline, text }: TeaserProps) {
+const Teaser = ({ blok }: { blok: TeaserBlok }) => {
   return (
-    <div className="mb-4">
-      {headline && (
-        <h1 className="mb-3">
-          {headline}
-        </h1>
-      )}
-      {text && (
-        <div 
-          className="mb-2"
-          dangerouslySetInnerHTML={{ __html: renderRichText(text) || '' }}
-        />
-      )}
+    <div {...storyblokEditable(blok)} className="py-32 text-center">
+      <h1 className="text-7xl text-[#50b0ae] font-bold">{blok.headline}</h1>
     </div>
   );
-}
+};
+
+export default Teaser;

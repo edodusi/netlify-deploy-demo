@@ -13,15 +13,16 @@
   "dependencies": {
     "@netlify/plugin-nextjs": "^5.11.6",
     "@storyblok/js": "^4.2.1",
+    "@storyblok/react": "^5.4.1",
     "next": "15.4.4",
     "react": "19.1.0",
-    "react-dom": "19.1.0",
-    "storyblok-js-client": "^7.1.1"
+    "react-dom": "19.1.0"
   },
   "devDependencies": {
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "netlify": "^23.0.0",
     "typescript": "^5"
   }
 }
