@@ -14,7 +14,7 @@ const components = {
  * This needs to be a client component.
  */
 storyblokInit({
-  accessToken: process.env.NEXT_PUBLIC_STORYBLOK_PREVIEW_TOKEN,
+  accessToken: process.env.NEXT_PUBLIC_STORYBLOK_PREVIEW_TOKEN ?? process.env.STORYBLOK_PREVIEW_TOKEN,
   use: [apiPlugin],
   components,
 });

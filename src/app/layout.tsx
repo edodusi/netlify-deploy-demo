@@ -2,7 +2,7 @@ import StoryblokProvider from "../components/StoryblokProvider";
 import "./globals.css";
 import { Geist, Geist_Mono } from "next/font/google";
 import type { Metadata } from "next";
-import { headers } from "next/headers";
+import { draftMode } from "next/headers";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -24,11 +24,7 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  // Use the `headers` function to check for the referer.
-  // This is the correct server-side approach for layouts.
-  const headersList = await headers();
-  const referer = headersList.get("referer");
-  const isStoryblokPreview = referer ? referer.includes("_storyblok_tk") : false;
+  const isStoryblokPreview = (await draftMode()).isEnabled;
 
   return (
     <html lang="en">
