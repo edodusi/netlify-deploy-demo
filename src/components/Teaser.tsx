@@ -16,7 +16,7 @@ export default function Teaser({ headline, text }: TeaserProps) {
       {text && (
         <div 
           className="mb-2"
-          dangerouslySetInnerHTML={{ __html: renderRichText(text) }}
+          dangerouslySetInnerHTML={{ __html: renderRichText(text) || '' }}
         />
       )}
     </div>
