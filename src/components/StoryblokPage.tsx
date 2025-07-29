@@ -26,7 +26,10 @@ export default async function StoryblokPage({
   slug,
   isEnabled,
 }: StoryblokPageProps) {
-  const data = await fetchData(slug, isEnabled);
+  // In development, always fetch draft content.
+  // In production, respect the isEnabled flag from draft mode.
+  const isDraft = process.env.NODE_ENV === "development" || isEnabled;
+  const data = await fetchData(slug, isDraft);
 
   if (!data?.story) {
     notFound();
