@@ -4,15 +4,8 @@ class StoryblokService {
   private client: StoryblokClient;
 
   constructor() {
-    const token = process.env.STORYBLOK_PREVIEW_TOKEN;
-    console.log('Environment check:', {
-      hasToken: !!token,
-      tokenLength: token?.length || 0,
-      nodeEnv: process.env.NODE_ENV
-    });
-    
     this.client = new StoryblokClient({
-      accessToken: token!,
+      accessToken: process.env.STORYBLOK_PREVIEW_TOKEN!,
     });
   }
 

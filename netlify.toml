@@ -8,6 +8,7 @@
 [build.environment]
   NODE_VERSION = "18"
   NPM_USE_PRODUCTION_BUILD = "true"
+  SECRETS_SCAN_OMIT_KEYS = "STORYBLOK_PREVIEW_TOKEN"
 
 # Redirect all requests to Next.js for client-side routing
 [[redirects]]
@@ -64,3 +65,5 @@
   command = "npm run build"
 
 # Production environment variables will be set in Netlify dashboard
+
+# Secrets scanning configuration - allow Storyblok token in build output
