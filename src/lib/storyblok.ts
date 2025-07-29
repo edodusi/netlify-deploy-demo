@@ -1,11 +1,12 @@
 import { apiPlugin, storyblokInit } from "@storyblok/react/rsc";
 
 // Component Imports
-import Page from "../components/Page";
-import Feature from "../components/Feature";
-import Grid from "../components/Grid";
-import Teaser from "../components/Teaser";
-import FeaturedPosts from "../components/FeaturedPosts";
+import Page from "@/components/Page";
+import Feature from "@/components/Feature";
+import Grid from "@/components/Grid";
+import Teaser from "@/components/Teaser";
+import FeaturedPosts from "@/components/FeaturedPosts";
+import FeaturedArticles from "@/components/FeaturedArticles";
 
 const components = {
   page: Page,
@@ -13,6 +14,7 @@ const components = {
   grid: Grid,
   teaser: Teaser,
   featured_posts: FeaturedPosts,
+  "featured-articles": FeaturedArticles,
 };
 
 const STORYBLOK_TOKEN =
