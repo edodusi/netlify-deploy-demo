@@ -1,17 +1,19 @@
-import { draftMode } from "next/headers";
 import StoryblokPage from "../../components/StoryblokPage";
 import type { Metadata } from "next";
 import { storyblokApi } from "../../lib/storyblok";
 
-export const revalidate = 3600;
+type PageProps = {
+  params: { slug?: string[] };
+};
 
-// Define the shape of the object returned by generateStaticParams
 type StaticParams = {
   slug: string[];
 };
 
-// Helper function to fetch data for metadata.
-// It uses your fix: `await params` to correctly handle the deferred value.
+/**
+ * Fetches the story data for metadata generation.
+ * This function remains static and fetches the published version for SEO.
+ */
 async function getStoryForMetadata(params: any) {
   const pageParams = await params;
   const slug = pageParams.slug?.join("/") || "home";
@@ -20,13 +22,18 @@ async function getStoryForMetadata(params: any) {
       version: "published",
     });
     return data.story;
-  } catch (error) {
+  }
+ catch (error) {
     return null;
   }
 }
 
-// generateMetadata uses the helper and your fix pattern.
-export async function generateMetadata(props: { params: any }): Promise<Metadata> {
+/**
+ * Generates metadata for a given page.
+ */
+export async function generateMetadata(props: {
+  params: any;
+}): Promise<Metadata> {
   const story = await getStoryForMetadata(props.params);
 
   if (!story) {
@@ -42,16 +49,20 @@ export async function generateMetadata(props: { params: any }): Promise<Metadata
   };
 }
 
-// The main Page component uses your fix: `await props.params`.
+/**
+ * The main page component. It resolves the slug from the route parameters
+ * and delegates rendering to the StoryblokPage component.
+ */
 export default async function Page(props: { params: any }) {
   const pageParams = await props.params;
   const slug = pageParams.slug?.join("/") || "home";
-  const { isEnabled } = await draftMode();
 
-  return <StoryblokPage slug={slug} isEnabled={isEnabled} />;
+  return <StoryblokPage slug={slug} />;
 }
 
-// generateStaticParams has the explicit return type to fix the build error.
+/**
+ * Generates static paths for all pages at build time.
+ */
 export async function generateStaticParams(): Promise<StaticParams[]> {
   const { data } = await storyblokApi().get("cdn/links/", {
     version: "published",

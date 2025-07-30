@@ -1,18 +1,22 @@
 import { storyblokApi } from "../lib/storyblok";
 import { StoryblokStory } from "@storyblok/react/rsc";
 import { notFound } from "next/navigation";
+import { getStoryblokVersion } from "../lib/utils/storyblok";
 
 type StoryblokPageProps = {
   slug: string;
-  isEnabled: boolean;
 };
 
-async function fetchData(slug: string, isEnabled: boolean) {
-  const version = isEnabled ? "draft" : "published";
+/**
+ * Fetches the data for a given slug from Storyblok, using the
+ * centralized version helper to determine whether to get draft or published content.
+ */
+async function fetchData(slug: string) {
+  const version = await getStoryblokVersion();
   try {
     const { data } = await storyblokApi().get(`cdn/stories/${slug}`, {
       version,
-      cv: isEnabled ? Date.now() : undefined,
+      cv: version === "draft" ? Date.now() : undefined,
     });
     return data;
   } catch (error) {
@@ -22,14 +26,13 @@ async function fetchData(slug: string, isEnabled: boolean) {
   }
 }
 
-export default async function StoryblokPage({
-  slug,
-  isEnabled,
-}: StoryblokPageProps) {
-  // In development, always fetch draft content.
-  // In production, respect the isEnabled flag from draft mode.
-  const isDraft = process.env.NODE_ENV === "development" || isEnabled;
-  const data = await fetchData(slug, isDraft);
+/**
+ * This component is responsible for fetching and rendering a single page
+ * from Storyblok. It no longer needs to know about draft mode directly,
+ * as that logic is handled by the getStoryblokVersion helper.
+ */
+export default async function StoryblokPage({ slug }: StoryblokPageProps) {
+  const data = await fetchData(slug);
 
   if (!data?.story) {
     notFound();
